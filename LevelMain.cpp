@@ -2,14 +2,8 @@
 #include <OP2Helper/OP2Helper.h>		// Optional header to make level building easier
 
 
-// Note: These exports are required by Outpost2.exe from every level
-//		 DLL. They give values for the map and tech trees used by the
-//		 level and a description to place in the level listbox. The
-//		 last export is used to define characteristics of the level.
-//		 See RequiredExports.h for more details.
-//		 ** Be sure to set these when you build your own level**
-// Required data exports  (Description, Map, TechTree, GameType, NumPlayers)
-ExportLevelDetails("Test Colony Game", "cm02.map", "MULTITEK.TXT", MissionTypes::Colony, 1)
+
+ExportLevelDetails("A - Garage Save Load Bug", "cm02.map", "MULTITEK.TXT", MissionTypes::Colony, 1)
 
 // Alternative style allowing more advanced settings such as AI players and max tech level:
 // Required data exports  (Description, Map, TechTree, GameType, NumPlayers, maxTechLevel, bUnitOnlyMission, numAIPlayers)
