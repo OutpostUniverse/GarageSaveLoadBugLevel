@@ -37,7 +37,7 @@ Export int InitProc()
 	TethysGame::CreateUnit(truck, map_id::mapCargoTruck, garage.Location(), Player0, mapNone, 0);
 
 	truck.PutInGarage(0, garage.Location().x, garage.Location().y);
-	
+
 	return true;
 }
 
