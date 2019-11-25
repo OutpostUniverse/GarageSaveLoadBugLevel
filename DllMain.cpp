@@ -8,7 +8,6 @@ BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 	{
 		DisableThreadLibraryCalls(hinstDLL);
 		HFLInit();
-		DisableThreadLibraryCalls(hinstDLL);
 	}
 	else if (fdwReason == DLL_PROCESS_DETACH)
 	{
