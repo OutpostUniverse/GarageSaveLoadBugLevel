@@ -34,12 +34,9 @@ ExportSaveLoadData(scriptGlobal);
 // Note: Returns true if level loaded successfully and is playable, false to abort
 Export int InitProc()
 {
-	Unit garage;
+	Unit garage, truck;
 	TethysGame::CreateUnit(garage, map_id::mapGarage, LOCATION(10 + X_, 10 + Y_), Player0, mapNone, 0);
-
-	Unit truck;
 	TethysGame::CreateUnit(truck, map_id::mapCargoTruck, garage.Location(), Player0, mapNone, 0);
-
 	truck.PutInGarage(0, garage.Location().x, garage.Location().y);
 
 	Player[Player0].CenterViewOn(garage.Location().x, garage.Location().y);
