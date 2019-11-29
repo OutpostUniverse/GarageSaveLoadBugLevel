@@ -42,6 +42,8 @@ Export int InitProc()
 
 	truck.PutInGarage(0, garage.Location().x, garage.Location().y);
 
+	Player[Player0].CenterViewOn(garage.Location().x, garage.Location().y);
+
 	DetectProblemUnitArrayAllocation();
 
 	return true;
