@@ -1,6 +1,10 @@
 #include <Outpost2DLL/Outpost2DLL.h>	// Main Outpost 2 header to interface with the game
 #include <OP2Helper/OP2Helper.h>		// Optional header to make level building easier
+#include <cstdint>
+#include <cstddef>
 
+
+void DetectProblemUnitArrayAllocation();
 
 
 ExportLevelDetails("A - Garage Save Load Bug", "cm02.map", "MULTITEK.TXT", MissionTypes::Colony, 1)
@@ -30,15 +34,32 @@ ExportSaveLoadData(scriptGlobal);
 // Note: Returns true if level loaded successfully and is playable, false to abort
 Export int InitProc()
 {
-	Unit garage;
+	Unit garage, truck;
 	TethysGame::CreateUnit(garage, map_id::mapGarage, LOCATION(10 + X_, 10 + Y_), Player0, mapNone, 0);
-
-	Unit truck;
 	TethysGame::CreateUnit(truck, map_id::mapCargoTruck, garage.Location(), Player0, mapNone, 0);
-
 	truck.PutInGarage(0, garage.Location().x, garage.Location().y);
 
+	Player[Player0].CenterViewOn(garage.Location().x, garage.Location().y);
+
+	DetectProblemUnitArrayAllocation();
+
 	return true;
+}
+
+void DetectProblemUnitArrayAllocation()
+{
+	// Find address of unit array
+	constexpr std::uintptr_t unitArrayPointerAddress = 0x54F848;
+	auto unitArrayPointer = *reinterpret_cast<std::uintptr_t*>(unitArrayPointerAddress);
+	// Determine unit array alignment
+	std::size_t alignment = unitArrayPointer % 120;
+	// Set warning sound based on problem alignment
+	auto soundId = (alignment == 0) ? sndGar_sel : sndBld_not;
+	// Build info message
+	char buffer[64];
+	scr_snprintf(buffer, sizeof(buffer), "UnitArrayAddress: %x,  Alignment: %i", unitArrayPointer, alignment);
+	// Inform user about unit array alignment
+	AddGameMessage(buffer, soundId);
 }
 
 
